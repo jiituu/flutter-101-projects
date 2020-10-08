@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "760487139946",
+    "firebase_url": "https://events-28286.firebaseio.com",
+    "project_id": "events-28286",
+    "storage_bucket": "events-28286.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760487139946:android:eca33ada52ef1b69fd8813",
+        "android_client_info": {
+          "package_name": "it.softwarehouse.events_book"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760487139946-ce9bjqq3ufamqc1virsb0q9kti7vtkfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbATkargyJXlaScZ3GEBpmGcuOjKN0GSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760487139946-ce9bjqq3ufamqc1virsb0q9kti7vtkfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "760487139946-v3546bpoi47a6fsf8oa14c09ug5lr7ge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.softwarehouse.events"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
