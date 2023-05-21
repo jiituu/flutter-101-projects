@@ -10,11 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Shoppping List',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: ShList());
+      title: 'Shopping List',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ShList(),
+    );
   }
 }
 
@@ -46,46 +47,59 @@ class _ShListState extends State<ShList> {
         itemCount: (shoppingList != null) ? shoppingList.length : 0,
         itemBuilder: (BuildContext context, int index) {
           return Dismissible(
-              key: Key(shoppingList[index].name),
-              onDismissed: (direction) {
-                String strName = shoppingList[index].name;
-                helper.deleteList(shoppingList[index]);
+            key: Key(shoppingList[index].name),
+            onDismissed: (direction) {
+              String strName = shoppingList[index].name;
+              helper.deleteList(shoppingList[index]);
 
-                setState(() {
-                  shoppingList.removeAt(index);
-                });
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('$strName deleted')));
+              setState(() {
+                shoppingList.removeAt(index);
+              });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('$strName deleted')),
+              );
+            },
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ItemsScreen(shoppingList[index]),
+                  ),
+                );
               },
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
+              leading: CircleAvatar(
+                child: Text(shoppingList[index].priority.toString()),
+              ),
+              title: Text(shoppingList[index].name),
+              trailing: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => dialog.buildDialog(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ItemsScreen(shoppingList[index])));
+                      shoppingList[index],
+                      false,
+                    ),
+                  );
                 },
-                leading: CircleAvatar(
-                  child: Text(shoppingList[index].priority.toString()),
-                ),
-                title: Text(shoppingList[index].name),
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => dialog.buildDialog(
-                              context, shoppingList[index], false));
-                    }),
-              ));
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (BuildContext context) =>
-                  dialog.buildDialog(context, ShoppingList(0, '', 0), true));
+            context: context,
+            builder: (BuildContext context) => dialog.buildDialog(
+              context,
+              ShoppingList(0, '', 0),
+              true,
+            ),
+          );
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.pink,
@@ -93,7 +107,7 @@ class _ShListState extends State<ShList> {
     );
   }
 
-  Future showData() async {
+  Future<void> showData() async {
     await helper.openDb();
     shoppingList = await helper.getLists();
     setState(() {
