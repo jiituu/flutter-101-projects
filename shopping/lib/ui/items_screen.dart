@@ -40,41 +40,52 @@ class _ItemsScreenState extends State<ItemsScreen> {
         itemCount: (items != null) ? items.length : 0,
         itemBuilder: (BuildContext context, int index) {
           return Dismissible(
-              key: Key(items[index].name),
-              onDismissed: (direction) {
-                String strName = items[index].name;
-                helper.deleteItem(items[index]);
-                
-                setState(() {
-                  items.removeAt(index);
-                });
-                
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text('$strName deleted')));
-              },
-              child: ListTile(
-                title: Text(items[index].name),
-                subtitle: Text(
-                    'Quantity: ${items[index].quantity} - Note: ${items[index].note}'),
-                onTap: () {},
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => itemsDialog
-                              .buildDialog(context, items[index], false));
-                    }),
-              ));
+            key: Key(items[index].name),
+            onDismissed: (direction) {
+              String strName = items[index].name;
+              helper.deleteItem(items[index]);
+
+              setState(() {
+                items.removeAt(index);
+              });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('$strName deleted')),
+              );
+            },
+            child: ListTile(
+              title: Text(items[index].name),
+              subtitle: Text(
+                'Quantity: ${items[index].quantity} - Note: ${items[index].note}',
+              ),
+              onTap: () {},
+              trailing: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => itemsDialog.buildDialog(
+                      context,
+                      items[index],
+                      false,
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (BuildContext context) => itemsDialog.buildDialog(
-                  context,
-                  ListItem(0, this.shoppingList.id, '', '', ''),
-                  true));
+            context: context,
+            builder: (BuildContext context) => itemsDialog.buildDialog(
+              context,
+              ListItem(0, this.shoppingList.id, '', '', ''),
+              true,
+            ),
+          );
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.pink,
@@ -82,7 +93,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
     );
   }
 
-  Future showData(int idList) async {
+  Future<void> showData(int idList) async {
     await helper.openDb();
     items = await helper.getItems(idList);
     setState(() {

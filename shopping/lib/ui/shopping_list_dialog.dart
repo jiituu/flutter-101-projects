@@ -19,10 +19,10 @@ class ShoppingListDialog {
         child: Column(
           children: <Widget>[
             TextField(
-             controller: txtName,
-             decoration: InputDecoration(
-               hintText: 'Shopping list name',
-             ),
+              controller: txtName,
+              decoration: InputDecoration(
+                hintText: 'Shopping list name',
+              ),
             ),
             TextField(
               controller: txtPriority,
@@ -30,7 +30,7 @@ class ShoppingListDialog {
                 hintText: 'Shopping list priority (1-3)',
               ),
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Save shopping list'),
               onPressed: () {
                 list.name = txtName.text;

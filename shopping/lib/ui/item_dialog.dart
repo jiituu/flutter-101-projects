@@ -39,7 +39,7 @@ class ItemsDialog {
                 hintText: 'something useful',
               ),
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Save item'),
               onPressed: () {
                 item.name = txtName.text;
